@@ -18,8 +18,41 @@
 
     </head>
     <body>
-        <main class="container">
-            <h1>Movies from 2014</h1>
+        <main class="container" ng-app="AngularDemo">
+            <section ng-controller="HelloController">
+                <h1>Introduce Yourself</h1>
+
+                <p><input type="text" class="form-control" placeholder="enter your first name" ng-model="person.firstName"/></p>
+
+                <p><input type="text" class="form-control" placeholder="enter your last name" ng-model="person.lastName"/></p>
+
+                <p>Hello {{person.firstName}} {{person.lastName}}</p>
+            </section>
+
+            <section ng-controller="MoviesController">
+                <h1>Movies from 2014</h1>
+
+                <p><input type="search" class="form-control" placeholder="search for a title" ng-model="searchString"/></p>
+
+                <p>{{filteredMovies.length}} {{1 == filteredMovies.length ? 'movie' : 'movies'}}</p>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th ng-click="sortBy('title')" ng-class="{sorted : isSortedBy('title')}">Title</th>
+                            <th ng-click="sortBy('grossSales')" ng-class="{sorted : isSortedBy('grossSales')}">Sales</th>
+                            <th ng-click="sortBy('ticketsSold')" ng-class="{sorted : isSortedBy('ticketsSold')}">Tickets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="movie in filteredMovies = (movies | filter : {title: searchString} | orderBy : sortCol : sortReverse)">
+                            <td>{{movie.title}}</td>
+                            <td>{{movie.grossSales | currency : '$' : 0}}</td>
+                            <td>{{movie.ticketsSold | number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
 
         </main>
 
@@ -30,3 +63,28 @@
         <script src="js/app.js"></script>
     </body>
 </html>
+
+
+<!-- angluar attributes start with ng
+        added things in app.js
+
+        25 27 29 app.js defined scope in ng model
+
+        ng-repeat : loop
+
+        "movie in movies" : movie is temporary thing
+
+        class=table is bootstrap
+
+        movie.grossSales is from movies-2014.js also title
+
+        currency : 'currency sign' : how many decimal?
+
+        {title: searchstring} only searching on titles
+
+        filteredmovies also temporary
+
+        sorted: if being sorted
+
+        *try adding releasedate in the table
+        -->
